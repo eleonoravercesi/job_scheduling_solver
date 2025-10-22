@@ -19,6 +19,8 @@ int main(int argc,  char **argv) {
     SCIP_CALL(SCIPincludeDefaultPlugins(scip));
     SCIP_CALL(SCIPcreateProbBasic(scip, "identical_machine_scheduling"));
 
+
+
     // Is everything ok?
     cout << "Opening: " << argv[1] << endl;
     auto results = readFile(filename);
@@ -101,7 +103,10 @@ int main(int argc,  char **argv) {
 
     // Print solution if any
     SCIP_SOL* sol = SCIPgetBestSol(scip);
+    // Print also the running time
+    double solvingTime = SCIPgetSolvingTime(scip);
     if (sol != nullptr) {
+        cout << "C++ SCIP Runtime: " << solvingTime << " seconds\n";
         cout << "Makespan T = " << SCIPgetSolVal(scip, sol, T) << "\n";
     } else {
         cout << "No solution found.\n";
