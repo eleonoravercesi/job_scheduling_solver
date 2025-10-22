@@ -8,7 +8,10 @@
 
 using namespace std;
 
-int main() {
+int main(int argc,  char **argv) {
+    // Properly read the filename
+    string filename(argv[1]);
+
     SCIP* scip = nullptr;
 
     // Create SCIP environment
@@ -16,8 +19,12 @@ int main() {
     SCIP_CALL(SCIPincludeDefaultPlugins(scip));
     SCIP_CALL(SCIPcreateProbBasic(scip, "identical_machine_scheduling"));
 
+    // Is everything ok?
+    cout << "Opening: " << argv[1] << endl;
+    auto results = readFile(filename);
+    std::cout << "File read ok" << std::endl;
+
     // Parse the file
-    auto results = readFile("data.txt"); // TODO: add command-line arg
     int m = results.first;
     vector<int> p = results.second;
     int n = (int)p.size();
